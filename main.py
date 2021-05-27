@@ -21,7 +21,7 @@ _steps = [
 
 
 # This automatically reads in the configuration
-@hydra.main(config_name='config')
+@hydra.main(config_path="config.yaml")
 def go(config: DictConfig):
 
     # Make sure we are logged in to Weights & Biases ("wandb")
