@@ -8,4 +8,4 @@ dependencies:
   - mlflow=1.14.1
   - pip:
       - wandb==0.10.30
-      - git+https://github.com/theyorubayesian/manhattan.git#egg=wandb-utils&subdirectory=project/solution/components
+      - git+https://github.com/theyorubayesian/manhattan.git@asiwaju#egg=wandb-utils&subdirectory=components

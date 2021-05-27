@@ -22,4 +22,4 @@ entry_points:
         description: A brief description of the output artifact
         type: string
 
-    command: "python run.py {sample} {artifact_name} {artifact_type} {artifact_description}"
+    command: "pip freeze > get_data_req.txt && python run.py {sample} {artifact_name} {artifact_type} {artifact_description}"
