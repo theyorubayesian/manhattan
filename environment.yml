@@ -12,3 +12,5 @@ dependencies:
   - matplotlib=3.3.4
   - pandas=1.2.3
   - git=2.30.2
+  - pip:
+    - hydra-core
