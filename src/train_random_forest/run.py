@@ -8,6 +8,7 @@ import os
 import shutil
 
 import mlflow
+import mlflow.sklearn
 import json
 
 import pandas as pd
@@ -73,7 +74,8 @@ def go(args):
 
     # Use run.use_artifact(...).file() to get the train and validation artifacts (args.train and args.val)
     # and store the returned path in the "train_local_path" and "val_local_path" variables
-
+    train_local_path = run.use_artifact(args.train).file()
+    val_local_path = run.use_artifact(args.val).file()
     # HERE
 
     ##################
@@ -97,9 +99,13 @@ def go(args):
     # hyperparameter search that we are going to do later will not work
 
     # HERE
+    sk_pipe = Pipeline([
+        ("preprocessor", Preprocessing()),
+        ("random_forest", RandomForestRegressor(**rf_config))
+    ])
 
     # Then fit it to the X_train, y_train data
-
+    sk_pipe.fit(X_train, y_train)
     ##################
 
     # Compute r2 and MAE
@@ -125,7 +131,7 @@ def go(args):
     # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
 
     # HERE
-
+    mlflow.sklearn.save_model(sk_pipe, "random_forest_dir")
     ##################
 
     # Upload to W&B

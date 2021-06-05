@@ -82,7 +82,7 @@ def go(config: DictConfig):
         if "data_split" in active_steps:
             _ = mlflow.run(
                 os.path.join(
-                    root_path, config["main"]["componentes_repository"], "train_val_test_split"
+                    root_path, config["main"]["components_repository"], "train_val_test_split"
                 ),
                 "main",
                 parameters={
@@ -107,8 +107,16 @@ def go(config: DictConfig):
             ##################
             # Implement here #
             ##################
-
-            pass
+            _ = mlflow.run(
+                os.path.join(root_path, 'src', 'train_random_forest'),
+                'main',
+                parameters={
+                    "train": "train_data.csv:latest",
+                    "val": "val_data.csv:latest",
+                    "rf_config": rf_config,
+                    "output_artifact": "random_forest_export"
+                }
+            )
 
         if "test_regression_model" in active_steps:
 
