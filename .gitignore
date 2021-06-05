@@ -9,5 +9,5 @@
 .DS_Store
 wandb
 /mlruns
-/outputs
+/**/outputs
 /**/artifacts/*
