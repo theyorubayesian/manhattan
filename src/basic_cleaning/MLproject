@@ -5,17 +5,28 @@ entry_points:
   main:
     parameters:
 
-      paarameter1:
-        description: ## ADD DESCRIPTION
+      input_artifact:
+        description: None
         type: string
 
-      parameter2:
-        description: ## ADD DESCRIPTION
+      output_name:
+        description: None
         type: string
 
-      parameter3:
-        description: ## ADD DESCRIPTION
+      output_type:
+        description: None
         type: string
 
+      output_description:
+        description: None
+        type: string
 
-    command: "python run.py  --paarameter1 {paarameter1}  --parameter2 {parameter2}  --parameter3 {parameter3} "
+      min_price:
+        description: None
+        type: int
+
+      max_price:
+        description: None
+        type: int
+
+    command: "python run.py  --input_artifact {input_artifact} --output_name {output_name}  --output_type {output_type}  --output_description {output_description} --min_price {min_price} --max_price {max_price}"

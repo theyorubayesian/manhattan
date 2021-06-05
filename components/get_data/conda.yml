@@ -4,7 +4,6 @@ channels:
   - defaults
 dependencies:
   - pip=21.1.1
-  - requests=2.25.1
   - mlflow=1.14.1
   - pip:
       - wandb==0.10.30

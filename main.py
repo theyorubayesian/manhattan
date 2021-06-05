@@ -25,7 +25,7 @@ _steps = [
 def go(config: DictConfig):
 
     # Make sure we are logged in to Weights & Biases ("wandb")
-    wandb.login(key=config['main']['wandb_api_key'])
+    # wandb.login(key=config['main']['wandb_api_key'])
 
     # Setup the wandb experiment. All runs will be grouped under this name
     os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
@@ -37,13 +37,13 @@ def go(config: DictConfig):
 
     # Move to a temporary directory
     with tempfile.TemporaryDirectory() as tmp_dir:
-
+        root_path = hydra.utils.get_original_cwd()
         if "download" in active_steps:
             # Download file and load in W&B
             _ = mlflow.run(
-                f"{config['main']['components_repository']}/get_data",
+                os.path.join(root_path, config['main']['components_repository'], "get_data"),
                 "main",
-                version="asiwaju",
+                # version="asiwaju",
                 parameters={
                     "sample": config["etl"]["sample"],
                     "artifact_name": "sample.csv",
@@ -53,10 +53,18 @@ def go(config: DictConfig):
             )
 
         if "basic_cleaning" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                os.path.join(root_path, 'src', 'basic_cleaning'),
+                "main",
+                parameters={
+                    "input_artifact": config["etl"]["sample"],
+                    "output_name": config["etl"]["output_name"],
+                    "output_type": config["etl"]["output_type"],
+                    "output_description": "Data with outliers and null values removed",
+                    "min_price": config['etl']['min_price'],
+                    "max_price": config['etl']['max_price']
+                }
+            )
 
         if "data_check" in active_steps:
             ##################
