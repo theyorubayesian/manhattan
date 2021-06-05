@@ -57,7 +57,7 @@ def go(config: DictConfig):
                 os.path.join(root_path, 'src', 'basic_cleaning'),
                 "main",
                 parameters={
-                    "input_artifact": config["etl"]["sample"],
+                    "input_artifact": config['etl']['basic_cleaning_input'],
                     "output_name": config["etl"]["output_name"],
                     "output_type": config["etl"]["output_type"],
                     "output_description": "Data with outliers and null values removed",
