@@ -61,6 +61,7 @@ def min_price(request):
 
     return float(min_price)
 
+
 @pytest.fixture(scope='session')
 def max_price(request):
     max_price = request.config.option.max_price
