@@ -34,6 +34,7 @@ def go(args):
     df['name'].fillna('-', inplace=True)
     df['host_name'].fillna('-', inplace=True)
 
+    os.makedirs("outputs", exist_ok=True)
     df.to_csv(os.path.join("outputs", args.output_name), index=False)
     logger.info(f"Uploading {args.output_name} to Weights & Biases")
     log_artifact(
