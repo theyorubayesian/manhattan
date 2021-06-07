@@ -68,17 +68,9 @@ def go(args):
         rf_config = json.load(fp)
     run.config.update(rf_config)
 
-    ###################
-    # Please complete #
-    ###################
-
-    # Use run.use_artifact(...).file() to get the train and validation artifacts (args.train and args.val)
-    # and store the returned path in the "train_local_path" and "val_local_path" variables
+    # Download train and validation data
     train_local_path = run.use_artifact(args.train).file()
     val_local_path = run.use_artifact(args.val).file()
-    # HERE
-
-    ##################
 
     # Read the downloaded files and divide X and y
     X_train = pd.read_csv(train_local_path)
@@ -89,24 +81,14 @@ def go(args):
 
     logger.info("Preparing sklearn pipeline")
 
-    ###################
-    # Please complete #
-    ###################
-
-    # Create a Pipeline object called sk_pipe containing two steps: a Preprocessing() step and a
-    # RandomForestRegressor(**rf_config) step. NOTE the **rf_config part which uses
-    # the hyperparameters that have been passed in. This is very important otherwise the
-    # hyperparameter search that we are going to do later will not work
-
-    # HERE
+    # Create model training pipeline
     sk_pipe = Pipeline([
         ("preprocessor", Preprocessing()),
         ("random_forest", RandomForestRegressor(**rf_config))
     ])
 
-    # Then fit it to the X_train, y_train data
+    # Fit pipeline on train data
     sk_pipe.fit(X_train, y_train)
-    ##################
 
     # Compute r2 and MAE
     logger.info("Scoring")
@@ -124,15 +106,8 @@ def go(args):
     if os.path.exists("random_forest_dir"):
         shutil.rmtree("random_forest_dir")
 
-    ###################
-    # Please complete #
-    ###################
-
-    # Save the sk_pipe pipeline as a mlflow.sklearn model in the directory "random_forest_dir"
-
-    # HERE
+    # Save the sk_pipe pipeline as a mlflow.sklearn model
     mlflow.sklearn.save_model(sk_pipe, "random_forest_dir")
-    ##################
 
     # Upload to W&B
     artifact = wandb.Artifact(

@@ -1,16 +1,11 @@
-name: nyc_airbnb_dev
+name: manhattan
 channels:
   - conda-forge
-  - defaults
 dependencies:
-  - mlflow=1.14.1
-  - ipython=7.21.0
-  - notebook=6.2.0
-  - jupyterlab=3.0.10
-  - cookiecutter=1.7.2
-  - hydra-core=1.0.6
-  - matplotlib=3.3.4
-  - pandas=1.2.3
-  - git=2.30.2
-  - pip:
-    - hydra-core==1.0.6
+  - python=3.8
+  - mlflow
+  - wandb
+  - cookiecutter
+  - jupyter
+  - scikit-learn
+prefix: /opt/homebrew/Caskroom/miniforge/base/envs/manhattan

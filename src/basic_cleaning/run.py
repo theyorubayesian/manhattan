@@ -54,42 +54,42 @@ if __name__ == "__main__":
     parser.add_argument(
         "--input_artifact",
         type=str,
-        help='',
+        help='Name of artifact to use',
         required=True
     )
 
     parser.add_argument(
         "--output_name",
         type=str,
-        help='',
+        help='Name of output file',
         required=True
     )
 
     parser.add_argument(
         "--output_type",
         type=str,
-        help='',
+        help='Type of output',
         required=True
     )
 
     parser.add_argument(
         "--output_description",
         type=str,
-        help='',
+        help='A brief description of the output',
         required=True
     )
 
     parser.add_argument(
         "--min_price",
         type=int,
-        help='',
+        help='Minimum price allowable in data',
         required=True
     )
 
     parser.add_argument(
         "--max_price",
         type=int,
-        help='',
+        help='Maximum price allowable in data',
         required=True
     )
     args = parser.parse_args()

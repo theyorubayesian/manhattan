@@ -3,7 +3,6 @@ import json
 import mlflow
 import tempfile
 import os
-import wandb
 import hydra
 from omegaconf import DictConfig
 
@@ -23,10 +22,6 @@ _steps = [
 # This automatically reads in the configuration
 @hydra.main(config_path="config.yaml")
 def go(config: DictConfig):
-
-    # Make sure we are logged in to Weights & Biases ("wandb")
-    # wandb.login(key=config['main']['wandb_api_key'])
-
     # Setup the wandb experiment. All runs will be grouped under this name
     os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
     os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
@@ -43,7 +38,6 @@ def go(config: DictConfig):
             _ = mlflow.run(
                 os.path.join(root_path, config['main']['components_repository'], "get_data"),
                 "main",
-                # version="asiwaju",
                 parameters={
                     "sample": config["etl"]["sample"],
                     "artifact_name": "sample.csv",
@@ -96,17 +90,11 @@ def go(config: DictConfig):
 
         if "train_random_forest" in active_steps:
 
-            # NOTE: we need to serialize the random forest configuration into JSON
+            # Serialize the random forest configuration into JSON
             rf_config = os.path.abspath("rf_config.json")
             with open(rf_config, "w+") as fp:
                 json.dump(dict(config["modeling"]["random_forest"].items()), fp)  # DO NOT TOUCH
 
-            # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
-            # step
-
-            ##################
-            # Implement here #
-            ##################
             _ = mlflow.run(
                 os.path.join(root_path, 'src', 'train_random_forest'),
                 'main',
